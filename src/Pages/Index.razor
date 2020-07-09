@@ -8,38 +8,31 @@
             <InputCheckbox type="checkbox" id="choiceA" @bind-Value="model.ChoiceA" />
         </label>
     </p>
-
     <p>
         <label>
             Choice B:
             <InputCheckbox type="checkbox" id="choiceA" @bind-Value="model.ChoiceB" />
         </label>
     </p>
-
     <p>
         <label>
             Choice C:
             <InputCheckbox type="checkbox" id="choiceA" @bind-Value="model.ChoiceC" />
         </label>
     </p>
-
     <button type="submit">Submit</button>
-
     <DataAnnotationsValidator />
     <ValidationSummary />
-
 </EditForm>
 
 @if (formIsValid)
-{ 
-    <p>The form is valid, well done for checking at least one of the checkboxes</p>
+{
+    <p>The form is valid, well done for checking at least one of the checkboxes.</p>
 }
 
 @code{
     ModelForForm model;
-
     EditContext editContext;
-
     bool formIsValid;
 
     protected override void OnInitialized()
