@@ -1,2 +1,85 @@
 ﻿@page "/"
-<h1>Hello, world!</h1>
+<h1>Blazor-Checkbox-Group</h1>
+<EditForm EditContext="editContext" OnSubmit="HandleSubmit">
+    <p>Make at least one choice...</p>
+    <p>
+        <label>
+            Choice A:
+            <InputCheckbox type="checkbox" id="choiceA" @bind-Value="model.ChoiceA" />
+        </label>
+    </p>
+
+    <p>
+        <label>
+            Choice B:
+            <InputCheckbox type="checkbox" id="choiceA" @bind-Value="model.ChoiceB" />
+        </label>
+    </p>
+
+    <p>
+        <label>
+            Choice C:
+            <InputCheckbox type="checkbox" id="choiceA" @bind-Value="model.ChoiceC" />
+        </label>
+    </p>
+
+    <button type="submit">Submit</button>
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+</EditForm>
+
+@if (formIsValid)
+{ 
+    <p>The form is valid, well done for checking at least one of the checkboxes</p>
+}
+
+@code{
+    ModelForForm model;
+
+    EditContext editContext;
+
+    bool formIsValid;
+
+    protected override void OnInitialized()
+    {
+        model = new ModelForForm();
+        editContext = new EditContext(model);
+    }
+
+    private void HandleSubmit()
+    {
+        var isValid = editContext.Validate();
+        if (isValid)
+        {
+            // Set form is valid for the purposes of the sample, just to show that the form is valid.
+            formIsValid = true;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private class ModelForForm
+    {
+        public bool ChoiceA { get; set; }
+
+        public bool ChoiceB { get; set; }
+
+        public bool ChoiceC { get; set; }
+
+        [Required]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "At least one choice is required.")]
+        public bool OneRoleSelected
+        {
+            get
+            {
+                return ((ChoiceA) || (ChoiceB) || (ChoiceC));
+            }
+            set { }
+        }
+    }
+
+}
